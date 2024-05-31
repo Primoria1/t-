@@ -1,0 +1,60 @@
+from easygui import *
+from urllib.request import urlopen
+nupud = ["ei","jah"]
+nupud2=["fail","veeb"]
+def kys():
+    vajutati = buttonbox("Kas sa soovid pikka teksti ?", choices = nupud)
+    if vajutati == "ei":
+        vajutati2 = buttonbox("Kas sa soovid lühikest siis? ", choices = nupud)
+        
+        if vajutati2 == "jah":
+            failVeebis = urlopen("https://kodu.ut.ee/~marinai/eprogalused/mesipuu.txt")
+            baidid = failVeebis.read()
+            tekst = baidid.decode()
+            ridadeKaupa = tekst.splitlines()
+            failVeebis.close()
+            msgbox(ridadeKaupa[4])
+            
+        else:
+            vajutati5 = buttonbox("Kas sa siis soovid pikka teksti(kui ei siis tuleb lühike kui jah siis pikk) ?", choices = nupud)
+        
+            if vajutati5 == "jah":
+                failVeebis = urlopen("https://kodu.ut.ee/~marinai/eprogalused/mesipuu.txt")
+                baidid = failVeebis.read()
+                tekst = baidid.decode()
+                failVeebis.close()
+                msgbox(tekst)
+            
+            else:
+                failVeebis = urlopen("https://kodu.ut.ee/~marinai/eprogalused/mesipuu.txt")
+                baidid = failVeebis.read()
+                tekst = baidid.decode()
+                ridadeKaupa = tekst.splitlines()
+                failVeebis.close()
+                msgbox(ridadeKaupa[4])
+            
+        
+    else:
+        failVeebis = urlopen("https://kodu.ut.ee/~marinai/eprogalused/mesipuu.txt")
+        baidid = failVeebis.read()
+        tekst = baidid.decode()
+        failVeebis.close()
+        msgbox(tekst)
+
+    vajutati6 = buttonbox("Kas sa soovid seda salvestada?", choices = nupud)
+    if vajutati6 == "jah":
+        f=open("EI.txt","w")
+        f.write(str(tekst)+"\n")
+        f.close()
+    else:
+        msgbox("ok")
+
+vajutati9 = buttonbox("Kas sa soovid teksti faili avada või veebist teksti lugeda?", choices = nupud2)
+if vajutati9 == "veeb":
+    kys()
+else:
+    f=open("EI.txt")
+    kiri=f.read()
+    msgbox(kiri)
+    f.close()
+    
